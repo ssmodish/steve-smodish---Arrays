@@ -27,6 +27,8 @@ Array *create_array(int capacity) {
     arr->count = 0;
     // Allocate memory for elements
     arr->elements = calloc(capacity, sizeof(char *));
+
+    return arr;
 }
 
 
@@ -105,7 +107,7 @@ void arr_insert(Array *arr, char *element, int index) {
     }
 
     // Resize the array if the number of elements is over capacity
-    if (arr->count == arr->capacity) {
+    if (arr->count >= arr->capacity) {
         resize_array(arr);
     }
 
@@ -115,7 +117,7 @@ void arr_insert(Array *arr, char *element, int index) {
     }
 
     // Copy the element and add it to the array
-    arr->elements[index] = element;
+    arr->elements[index] = strdup(element);
 
     // Increment count by 1
     arr->count += 1;
@@ -128,11 +130,14 @@ void arr_append(Array *arr, char *element) {
 
     // Resize the array if the number of elements is over capacity
     // or throw an error if resize isn't implemented yet.
+    if (arr->count >= arr->capacity) {
+        resize_array(arr);
+    }
 
     // Copy the element and add it to the end of the array
-
+    arr->elements[arr->count] = strdup(element);
     // Increment count by 1
-
+    arr->count += 1;
 }
 
 /*****
@@ -144,12 +149,24 @@ void arr_append(Array *arr, char *element) {
 void arr_remove(Array *arr, char *element) {
 
     // Search for the first occurence of the element and remove it.
+    int el_index = 0;
     // Don't forget to free its memory!
+    for(int i = 0; i < arr->count; i++)
+    {
+        if(arr->elements[i] == element)
+        {
+            free(arr->elements[i]);
+            el_index = i;
+        }
+    }
 
     // Shift over every element after the removed element to the left one position
-
+    for(int j = el_index; j < arr->count; j++)
+    {
+        arr->elements[j] = arr->elements[j + 1];
+    }
     // Decrement count by 1
-
+    arr->count -= 1;
 }
 
 
