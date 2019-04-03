@@ -6,3 +6,7 @@ build
 *.log
 
 */arrays
+.idea/
+.vscode/
+.vs/
+CMakeLists.txt
