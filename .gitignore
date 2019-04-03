@@ -7,3 +7,6 @@ build
 
 */arrays
 .idea/
+.vscode/
+.vs/
+CMakeLists.txt
